@@ -3,18 +3,18 @@ package com.job.jumys.service;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.job.jumys.model.Vacancy;
-import com.job.jumys.repository.MemoryVacancyRepository;
 import com.job.jumys.repository.VacancyRepository;
 
+@Service
 public class SimpleVacancyService implements VacancyService {
 
-    private static final SimpleVacancyService INSTANCE = new SimpleVacancyService();
+    private final VacancyRepository vacancyRepository;
 
-    private final VacancyRepository vacancyRepository = MemoryVacancyRepository.getInstance();
-
-    public static SimpleVacancyService getInstance() {
-        return INSTANCE;
+    public SimpleVacancyService(VacancyRepository vacancyRepository) {
+        this.vacancyRepository = vacancyRepository;
     }
 
     @Override

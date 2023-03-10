@@ -5,14 +5,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.job.jumys.service.SimpleVacancyService;
 import com.job.jumys.service.VacancyService;
 
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyController {
 
-    private final VacancyService vacancyService = SimpleVacancyService.getInstance();
+    private final VacancyService vacancyService;
+
+    public VacancyController(VacancyService vacancyService) {
+        this.vacancyService = vacancyService;
+    } 
 
     @GetMapping
     public String getAll(Model model) {

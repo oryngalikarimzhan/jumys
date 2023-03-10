@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.job.jumys.model.Vacancy;
 
+@Repository
 public class MemoryVacancyRepository implements VacancyRepository {
-    
-    private static final MemoryVacancyRepository INSTANCE = new MemoryVacancyRepository();    
 
     private int nextId = 1;
 
@@ -22,10 +23,6 @@ public class MemoryVacancyRepository implements VacancyRepository {
         save(new Vacancy(0, "Middle Java Developer", "2 year experiance"));
         save(new Vacancy(0, "Middle+ Java Developer", "3 year experiance"));
         save(new Vacancy(0, "Senior Java Developer", "5 year experiance"));
-    }
-
-    public static MemoryVacancyRepository getInstance() {
-        return INSTANCE;
     }
 
     @Override

@@ -3,18 +3,18 @@ package com.job.jumys.service;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.job.jumys.model.Candidate;
 import com.job.jumys.repository.CandidateRepository;
-import com.job.jumys.repository.MemoryCandidateRepository;
 
+@Service
 public class SimpleCandidateService implements CandidateService {
-    
-    private static final SimpleCandidateService INSTANCE = new SimpleCandidateService();
 
-    private final CandidateRepository candidateRepository = MemoryCandidateRepository.getInstance();
+    private final CandidateRepository candidateRepository;
 
-    public static SimpleCandidateService getInstance() {
-        return INSTANCE;
+    public SimpleCandidateService(CandidateRepository candidateRepository) {
+        this.candidateRepository = candidateRepository;
     }
 
     @Override

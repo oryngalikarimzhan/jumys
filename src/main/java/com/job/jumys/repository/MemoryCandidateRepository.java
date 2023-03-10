@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
 import com.job.jumys.model.Candidate;
 
+@Repository
 public class MemoryCandidateRepository implements CandidateRepository {
     
-    private static final MemoryCandidateRepository INSTANCE = new MemoryCandidateRepository();    
-
     private int nextId = 1;
 
     private final Map<Integer, Candidate> vacancies = new HashMap<>();
@@ -22,10 +22,6 @@ public class MemoryCandidateRepository implements CandidateRepository {
         save(new Candidate(0, "Middle Java Developer", "2 year experiance"));
         save(new Candidate(0, "Middle+ Java Developer", "3 year experiance"));
         save(new Candidate(0, "Senior Java Developer", "5 year experiance"));
-    }
-
-    public static MemoryCandidateRepository getInstance() {
-        return INSTANCE;
     }
 
     @Override

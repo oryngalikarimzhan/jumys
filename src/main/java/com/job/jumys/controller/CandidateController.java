@@ -6,12 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.job.jumys.service.CandidateService;
-import com.job.jumys.service.SimpleCandidateService;
 
 @Controller
 @RequestMapping("/candidates")
 public class CandidateController {
-    private final CandidateService candidateService = SimpleCandidateService.getInstance();
+    private final CandidateService candidateService;
+
+    public CandidateController(CandidateService candidateService) {
+        this.candidateService = candidateService;
+    }
 
     @GetMapping
     public String getAll(Model model) {
