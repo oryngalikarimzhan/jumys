@@ -7,17 +7,23 @@ public class Candidate {
     
     private int id;
 
-    private String name;
+    private String title;
 
     private String description;
 
     private LocalDateTime creationDate;
 
-    public Candidate(int id, String name, String description) {
+    private boolean visible;
+
+    private int cityId;
+
+    public Candidate(int id, String title, String description, boolean visible, int cityId) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.description = description;
         this.creationDate = LocalDateTime.now();
+        this.visible = visible;
+        this.cityId = cityId;
     }
 
     public int getId() {
@@ -28,12 +34,12 @@ public class Candidate {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -50,6 +56,22 @@ public class Candidate {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     @Override

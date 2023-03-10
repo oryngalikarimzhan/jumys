@@ -15,17 +15,17 @@ import com.job.jumys.model.Candidate;
 @Repository
 public class MemoryCandidateRepository implements CandidateRepository {
     
-    private final AtomicInteger nextId = new AtomicInteger(1);
+    private final AtomicInteger nextId = new AtomicInteger(0);
 
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<Integer, Candidate>();
 
     private MemoryCandidateRepository() {
-        save(new Candidate(0, "Intern Java Developer", "no experiance"));
-        save(new Candidate(0, "Junior Java Developer", "1 year experiance"));
-        save(new Candidate(0, "Junior+ Java Developer", "1.5 year experiance"));
-        save(new Candidate(0, "Middle Java Developer", "2 year experiance"));
-        save(new Candidate(0, "Middle+ Java Developer", "3 year experiance"));
-        save(new Candidate(0, "Senior Java Developer", "5 year experiance"));
+        save(new Candidate(0, "Intern Java Developer", "no experiance", false, 1));
+        save(new Candidate(0, "Junior Java Developer", "1 year experiance", true, 2));
+        save(new Candidate(0, "Junior+ Java Developer", "1.5 year experiance", true, 3));
+        save(new Candidate(0, "Middle Java Developer", "2 year experiance", true, 1));
+        save(new Candidate(0, "Middle+ Java Developer", "3 year experiance", true, 2));
+        save(new Candidate(0, "Senior Java Developer", "5 year experiance", true, 2));
     }
 
     @Override
@@ -43,7 +43,13 @@ public class MemoryCandidateRepository implements CandidateRepository {
     @Override
     public boolean update(Candidate candidate) {
         return candidates.computeIfPresent(candidate.getId(), (id, oldCandidate) -> 
-            new Candidate(oldCandidate.getId(), candidate.getName(), candidate.getDescription())) != null;
+            new Candidate(
+                oldCandidate.getId(), 
+                candidate.getTitle(), 
+                candidate.getDescription(), 
+                candidate.getVisible(), 
+                candidate.getCityId())
+            ) != null;
     }
 
     @Override
