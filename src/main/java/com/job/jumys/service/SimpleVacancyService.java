@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.job.jumys.controller.ThreadSafe;
 import com.job.jumys.model.Vacancy;
 import com.job.jumys.repository.VacancyRepository;
 
+@ThreadSafe
 @Service
 public class SimpleVacancyService implements VacancyService {
 

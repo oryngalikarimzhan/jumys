@@ -1,19 +1,23 @@
 package com.job.jumys.repository;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Repository;
+
+import com.job.jumys.controller.ThreadSafe;
 import com.job.jumys.model.Candidate;
 
+@ThreadSafe
 @Repository
 public class MemoryCandidateRepository implements CandidateRepository {
     
-    private int nextId = 1;
+    private final AtomicInteger nextId = new AtomicInteger(1);
 
-    private final Map<Integer, Candidate> vacancies = new HashMap<>();
+    private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<Integer, Candidate>();
 
     private MemoryCandidateRepository() {
         save(new Candidate(0, "Intern Java Developer", "no experiance"));
@@ -26,30 +30,30 @@ public class MemoryCandidateRepository implements CandidateRepository {
 
     @Override
     public Candidate save(Candidate candidate) {
-        candidate.setId(nextId++);
-        vacancies.put(candidate.getId(), candidate);
+        candidate.setId(nextId.incrementAndGet());
+        candidates.put(candidate.getId(), candidate);
         return candidate;
     }
 
     @Override
     public boolean deleteById(int id) {
-        return vacancies.remove(id) != null;
+        return candidates.remove(id) != null;
     }
 
     @Override
     public boolean update(Candidate candidate) {
-        return vacancies.computeIfPresent(candidate.getId(), (id, oldCandidate) -> 
+        return candidates.computeIfPresent(candidate.getId(), (id, oldCandidate) -> 
             new Candidate(oldCandidate.getId(), candidate.getName(), candidate.getDescription())) != null;
     }
 
     @Override
     public Optional<Candidate> findById(int id) {
-        return Optional.ofNullable(vacancies.get(id));
+        return Optional.ofNullable(candidates.get(id));
     }
 
     @Override
     public Collection<Candidate> findAll() {
-        return vacancies.values();
+        return candidates.values();
     }
 
 }
