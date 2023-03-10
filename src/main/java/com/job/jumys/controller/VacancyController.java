@@ -5,18 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.job.jumys.repository.MemoryVacancyRepository;
-import com.job.jumys.repository.VacancyRepository;
+import com.job.jumys.service.SimpleVacancyService;
+import com.job.jumys.service.VacancyService;
 
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyController {
 
-    private final VacancyRepository vacancyRepository = MemoryVacancyRepository.getInstance();
+    private final VacancyService vacancyService = SimpleVacancyService.getInstance();
 
     @GetMapping
     public String getAll(Model model) {
-        model.addAttribute("vacancies", vacancyRepository.findAll());
+        model.addAttribute("vacancies", vacancyService.findAll());
         return "vacancies/list";
     }
 
